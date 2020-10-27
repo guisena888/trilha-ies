@@ -22,10 +22,10 @@ class SkinController {
     fun findAll(@RequestParam(required = false) category: String?): MutableIterable<Skin> {
         return if(!category.isNullOrBlank()) {
             skinRepository.findByCategory(categoryRepository.findByNameContainingIgnoreCase(category).get())
-        }        
-        else
+        } else 
             skinRepository.findAll()
     }
+       
 
     @GetMapping("/{id}")
     fun findById(@PathVariable("id") id: Long): ResponseEntity<Skin>{
