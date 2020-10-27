@@ -19,10 +19,16 @@ class SkinController {
     lateinit var categoryRepository: CategoryRepository
 
     @GetMapping
-    fun findAll(@RequestParam(required = false) category: String?): MutableIterable<Skin> {
-        return if(!category.isNullOrBlank()) {
+    fun findAll(@RequestParam(required = false) category: String?,
+                @RequestParam(required = false) name: String?): MutableIterable<Skin> {
+        return if((!category.isNullOrBlank()) && (!name.isNullOrBlank())) {
+            skinRepository.findAll()
+        } else if((category.isNullOrBlank()) && (!name.isNullOrBlank())) {
+            skinRepository.findByNameContainingIgnoreCase(name).get())
+        } else if((category.isNullOrBlank()) && (!name.isNullOrBlank())) {
             skinRepository.findByCategory(categoryRepository.findByNameContainingIgnoreCase(category).get())
-        } else
+        }        
+        else
             skinRepository.findAll()
     }
 
