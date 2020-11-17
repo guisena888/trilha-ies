@@ -1,6 +1,9 @@
 package com.fatec.ies.trilha.security.models
 
+import com.fatec.ies.trilha.model.Skin
+import com.fatec.ies.trilha.security.repository.UserRespository
 import com.fatec.ies.trilha.security.service.UserDetailsImpl
+import org.springframework.security.core.context.SecurityContextHolder
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.Email
@@ -44,5 +47,12 @@ class User {
         this.username = userDetaislImpl.username
         this.email = userDetaislImpl.email
         this.password = userDetaislImpl.password
+    }
+}
+
+object UserUtils {
+    fun findLoggedUser(userRespository: UserRespository): User {
+        var userDetails = SecurityContextHolder.getContext().authentication.principal as UserDetailsImpl
+        return userRespository.findByUsername(userDetails.username).get()
     }
 }

@@ -9,6 +9,15 @@
 --INSERT INTO EMPRESA_INVESTIDOR(empresa, investidor) VALUES(2,1);
 --INSERT INTO EMPRESA_INVESTIDOR(empresa, investidor) VALUES(2,3);
 
+INSERT INTO CATEGORY VALUES(1, 'tabuleiro');
+INSERT INTO CATEGORY VALUES(2, 'peca');
+INSERT INTO CATEGORY VALUES(3, 'emblema');
+
+INSERT INTO SKIN VALUES(1, 'tabuleiro', 'tabuleiro', 20, 1);
+INSERT INTO SKIN VALUES(2, 'peca', 'peca', 20, 2);
+INSERT INTO SKIN VALUES(3, 'peca', 'peca', 20, 3);
+
+
 INSERT INTO roles(name) VALUES('ROLE_USER');
 INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
