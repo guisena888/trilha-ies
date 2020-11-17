@@ -22,3 +22,8 @@ data class SkinDto(
         )
     }
 }
+
+data class CatalogSkinDto (
+    var skin: Skin,
+    var bought: Boolean
+)

@@ -19,5 +19,6 @@ interface CategoryRepository : CrudRepository<Category, Long> {
 interface UserSkinRepository : CrudRepository<UserSkin, Long> {
     fun findByUser(user: User): MutableIterable<UserSkin>
     fun findByUserAndSkin(user: User, skin: Skin): Optional<UserSkin>
+    fun existsByUserAndSkin(user: User, skin: Skin): Boolean
 //    fun findBySkinInAAndUserAndIsEnabled(skins: MutableIterable<Skin>, user): MutableIterable<UserSkin>
 }

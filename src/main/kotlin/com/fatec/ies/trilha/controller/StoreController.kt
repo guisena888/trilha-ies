@@ -1,7 +1,9 @@
 package com.fatec.ies.trilha.controller
 
+import com.fatec.ies.trilha.model.CatalogSkinDto
 import com.fatec.ies.trilha.model.Skin
 import com.fatec.ies.trilha.model.UserSkin
+import com.fatec.ies.trilha.repository.CategoryRepository
 import com.fatec.ies.trilha.repository.SkinRepository
 import com.fatec.ies.trilha.repository.UserSkinRepository
 import com.fatec.ies.trilha.security.models.UserUtils
@@ -22,6 +24,9 @@ class StoreController {
 
     @Autowired
     lateinit var userSkinRepository: UserSkinRepository
+
+    @Autowired
+    lateinit var categoryRepository: CategoryRepository
 
     @PostMapping("/{id}")
     fun buySkin(@PathVariable("id") id: Long): ResponseEntity<Any> {
@@ -56,5 +61,25 @@ class StoreController {
         userSkinRepository.save(userSkin)
 
         return ResponseEntity.ok().build()
+    }
+
+    @GetMapping("/catalog")
+    fun getCatalog(@RequestParam(required = false) category: String?): MutableIterable<CatalogSkinDto> {
+        val user = UserUtils.findLoggedUser(userRepository)
+        val skins: MutableIterable<Skin>
+        if (!category.isNullOrBlank()) {
+            skins = skinRepository.findByCategory(categoryRepository.findByNameContainingIgnoreCase(category).get())
+        } else
+            skins = skinRepository.findAll()
+
+        val skinsList: MutableList<CatalogSkinDto> = mutableListOf()
+        skins.forEach{
+            skinsList.add(CatalogSkinDto(
+                    skin = it,
+                    bought = userSkinRepository.existsByUserAndSkin(user, it)
+            ))
+        }
+
+        return skinsList
     }
 }
