@@ -24,6 +24,10 @@ data class SkinDto(
 }
 
 data class CatalogSkinDto (
-    var skin: Skin,
-    var bought: Boolean
+        var id: Long,
+        var name: String,
+        var imageUrl: String,
+        var category: Category,
+        var price: BigDecimal,
+        var bought: Boolean
 )

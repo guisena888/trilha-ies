@@ -75,7 +75,11 @@ class StoreController {
         val skinsList: MutableList<CatalogSkinDto> = mutableListOf()
         skins.forEach{
             skinsList.add(CatalogSkinDto(
-                    skin = it,
+                    id = it.id!!,
+                    name = it.name,
+                    imageUrl = it.imageUrl,
+                    category = it.category,
+                    price = it.price,
                     bought = userSkinRepository.existsByUserAndSkin(user, it)
             ))
         }
