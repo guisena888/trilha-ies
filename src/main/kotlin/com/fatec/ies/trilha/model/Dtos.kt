@@ -31,3 +31,12 @@ data class CatalogSkinDto (
         var price: BigDecimal,
         var bought: Boolean
 )
+
+data class MySkinDto (
+        var id: Long,
+        var name: String,
+        var imageUrl: String,
+        var category: Category,
+        var price: BigDecimal,
+        var isEnabled: Boolean
+)

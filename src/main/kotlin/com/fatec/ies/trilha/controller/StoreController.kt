@@ -1,6 +1,7 @@
 package com.fatec.ies.trilha.controller
 
 import com.fatec.ies.trilha.model.CatalogSkinDto
+import com.fatec.ies.trilha.model.MySkinDto
 import com.fatec.ies.trilha.model.Skin
 import com.fatec.ies.trilha.model.UserSkin
 import com.fatec.ies.trilha.repository.CategoryRepository
@@ -38,9 +39,22 @@ class StoreController {
     }
 
     @GetMapping
-    fun getSkins(): MutableIterable<UserSkin> {
+    fun getSkins(): MutableIterable<MySkinDto> {
         val user = UserUtils.findLoggedUser(userRepository)
-        return userSkinRepository.findByUser(user)
+        val userSkins =  userSkinRepository.findByUser(user)
+        val skinsList: MutableList<MySkinDto> = mutableListOf()
+        userSkins.forEach {
+            skinsList.add(MySkinDto(
+                    id = it.skin?.id!!,
+                    name = it.skin?.name!!,
+                    imageUrl = it.skin?.imageUrl!!,
+                    category = it.skin?.category!!,
+                    price = it.skin?.price!!,
+                    isEnabled = it.isEnabled!!
+            ))
+        }
+
+        return skinsList
     }
 
     @PostMapping("/equip/{id}")
